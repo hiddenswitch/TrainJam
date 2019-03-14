@@ -1,0 +1,10 @@
+{
+    "name": "MaterialUIEditor",
+    "references": [
+        "MaterialUI"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": []
+}
