@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class DragObject : MonoBehaviour
@@ -14,7 +15,8 @@ public class DragObject : MonoBehaviour
     bool dragging = false;
     public float force = 2.0f;
     Cutting lastCutting;
-    private float grabHeight = 0.2f;
+    private float grabHeight = 0.4f;
+    private bool midAnim = false;
 
     private void OnMouseDown()
     {
@@ -60,6 +62,7 @@ public class DragObject : MonoBehaviour
 
         if (dragging)
         {
+            //rb.isKinematic = true;
             if (!Input.GetMouseButton(0))
             {
                 dragging = false;
@@ -83,8 +86,28 @@ public class DragObject : MonoBehaviour
             }
         }else
         {
+            //rb.isKinematic = false;
             //if (lastCutting)
             //    lastCutting.StopCutting();
         }
+    }
+
+    private void OnTriggerStay(Collider col)
+    {
+        if (!dragging && !midAnim)
+        {
+            if (col.gameObject.GetComponent<Trash>())
+            {
+                midAnim = true;
+                transform.DOScale(0, 1f).OnComplete(() =>
+                {
+                    FindObjectOfType<SpawnManager>().SpawnPrefab1(new Vector3(0, 6, 0));
+                    Destroy(this.gameObject);
+
+                });
+                transform.DOMove(col.gameObject.transform.position + new Vector3(0, 0.5f, 0), 0.5f);
+            }
+        }
+
     }
 }
