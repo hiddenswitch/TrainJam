@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using MaterialUI;
 using Meteor;
 using UniRx;
+using UniRx.Diagnostics;
 using UniRx.Triggers;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -12,6 +15,8 @@ namespace TrainJam.Multiplayer
 {
     public class GameController : UIBehaviour
     {
+        public static GameController instance { get; private set; }
+
         [Header("Multiplayer")]
         [SerializeField]
         [Tooltip("Check this box to try to connect to a server running at the provided URL")]
@@ -28,6 +33,7 @@ namespace TrainJam.Multiplayer
         [SerializeField] private MaterialScreen m_GameScreen;
         [SerializeField] private MaterialScreen m_TutorialScreen;
         [SerializeField] private MaterialScreen m_RoundEndScreen;
+        [SerializeField] private RectTransform m_OrdersHorizontalLayoutGroup;
 
         [Header("Lobby Settings")] [SerializeField]
         private Text m_ReadyText;
@@ -38,8 +44,19 @@ namespace TrainJam.Multiplayer
         [SerializeField] private Button m_StartGameButton;
 
         private StringReactiveProperty m_CurrentMatchId = new StringReactiveProperty();
+        private IntReactiveProperty m_CurrentPlayerId = new IntReactiveProperty(-1);
+        private CompositeDisposable m_MatchDisposables = new CompositeDisposable();
 
-        public IReadOnlyReactiveProperty<string> CurrentMatchId => m_CurrentMatchId;
+        public int localPlayerId => m_CurrentPlayerId.Value;
+
+        public RectTransform OrdersHorizontalLayoutGroup => m_OrdersHorizontalLayoutGroup;
+        public string matchId => m_CurrentMatchId.Value;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            instance = this;
+        }
 
         protected override void Start()
         {
@@ -64,29 +81,124 @@ namespace TrainJam.Multiplayer
                 })
                 .AddTo(this);
 
+            var connectionId = new StringReactiveProperty();
+
+            // Keep track of my connection ID
+            var connections = new Collection<ConnectionDocument>("connections");
+            connections
+                .Find()
+                .Observe((id, ignored) => { connectionId.Value = id; })
+                .AddTo(this);
+
             // Show the lobbies
             var lobbies = new Collection<LobbyDocument>("lobbies");
             lobbies.Find(lobby => lobby._id == "public")
                 .Observe((id, doc) => { UpdateLobby(doc); },
-                    (id, doc, values, keys) => UpdateLobby(doc));
+                    (id, doc, values, keys) => UpdateLobby(doc))
+                .AddTo(this);
 
             // Wire up to the match
             var matches = new Meteor.Collection<MatchDocument>("matches");
+            matches.Find().Observe(added:
+                    (id, document) =>
+                    {
+                        Debug.Log($"Matches: {id}, {document._id}");
+                        m_CurrentMatchId.Value = document._id;
+                        m_CurrentPlayerId.Value = Array.IndexOf(document.players, connectionId.Value);
+                    }, changed: (id, document, values, keys) => { })
+                .AddTo(this);
 
+            // Keeps track of the instantiated entity objects
+            var entities = new Collection<EntityDocument>("entities");
+            // First, subscribe to the entities as soon as we have a valid player id and match id
+            Observable.Zip(m_CurrentPlayerId, m_CurrentMatchId,
+                    (playerId, matchId) => new Tuple<int, string>(playerId, matchId))
+                .Debug("Player Id and Match Id")
+                .Where(tuple => tuple.Item1 != -1 && tuple.Item2 != null)
+                .Subscribe(tuple =>
+                {
+                    entities.Find().Observe(added: (id, doc) =>
+                    {
+                        if (!EntityBehaviour.instances.ContainsKey(id))
+                        {
+                            if (!EntityBehaviour.prefabs.ContainsKey(doc.prefab))
+                            {
+                                Debug.LogWarning(
+                                    $"GameController: id {id}, Existing instances [{string.Join(",", EntityBehaviour.instances.Keys.ToArray())}]");
+                                Debug.LogError(
+                                    $"GameController: Missing prefab {doc.prefab} that needs an implementation of EntityBehaviour attached.");
+                                return;
+                            }
+
+                            var behaviour = EntityBehaviour.prefabs[doc.prefab];
+                            if (behaviour.instantiateOnAdded)
+                            {
+                                // Calls start which adds it to the EntityBehaviour.instances dict
+                                Instantiate(behaviour);
+                            }
+                            else
+                            {
+                                Debug.LogError(
+                                    $"GameController: {doc.prefab} should be instantiate on added since it was not found in the scene with id {id} and existing instances {string.Join(",", EntityBehaviour.instances.Keys.ToArray())}");
+                                return;
+                            }
+                        }
+
+
+                        var entity = EntityBehaviour.instances[id];
+                        entity.OnAddedInternal(doc, localPlayerId);
+                    }, changed: (id, doc, changes, fields) =>
+                    {
+                        if (!EntityBehaviour.instances.ContainsKey(id))
+                        {
+                            Debug.LogError(
+                                $"GameController: Changed failed because missing instance with entity ID {id} with prefab type {doc.prefab}");
+                            return;
+                        }
+
+                        EntityBehaviour.instances[id].OnChangedInternal(doc, changes, fields);
+                    }, removed: id =>
+                    {
+                        if (!EntityBehaviour.instances.ContainsKey(id))
+                        {
+                            Debug.LogError(
+                                $"GameController: Removed failed because missing instance with entity ID {id}");
+                            return;
+                        }
+
+                        var entity = EntityBehaviour.instances[id];
+                        entity.OnRemovedInternal();
+                        if (entity.destroyOnRemoved)
+                        {
+                            // Removes it from the dict too
+                            Destroy(entity.gameObject);
+                        }
+                    }).AddTo(m_MatchDisposables);
+                    StartCoroutine(MeteorEntitiesSubscription(tuple));
+                    m_UiScreenView.Transition(m_GameScreen.screenIndex);
+                })
+                .AddTo(this);
+
+            // The ready button tells the lobby (currently the public one) that we are ready to play
             m_ReadyButton.OnPointerClickAsObservable()
                 .Subscribe(ignored => { StartCoroutine(MeteorReadyPlayer()); })
                 .AddTo(this);
 
+            // The start game button starts the game. Anyone can press it!
             m_StartGameButton.OnPointerClickAsObservable()
                 .Subscribe(ignored => { StartCoroutine(MeteorStartGame()); })
                 .AddTo(this);
 
-            // Whenever a match is set, go to the game screen for now.
-            m_CurrentMatchId.Where(id => !string.IsNullOrEmpty(id))
-                .Subscribe(matchId => m_UiScreenView.Transition(m_GameScreen.screenIndex));
-
             // Connect to meteor and subscribe
             StartCoroutine(MeteorStart());
+        }
+
+        private IEnumerator MeteorEntitiesSubscription(Tuple<int, string> tuple)
+        {
+            // This subscription takes a match id, followed by a player id
+            var sub = Subscription.Subscribe("entities", tuple.Item2, tuple.Item1);
+            sub.AddTo(m_MatchDisposables);
+            yield return (Coroutine) sub;
         }
 
         private void UpdateLobby(LobbyDocument doc)
@@ -112,8 +224,7 @@ namespace TrainJam.Multiplayer
             // Go to the lobby screen
             m_UiScreenView.Transition(m_LobbyScreen.screenIndex);
 
-            yield return (Coroutine) Subscription.Subscribe("lobbies");
-            yield return (Coroutine) Subscription.Subscribe("matches");
+            yield return (Coroutine) Subscription.Subscribe("data");
         }
 
         /// <summary>
@@ -127,6 +238,8 @@ namespace TrainJam.Multiplayer
 
         private IEnumerator MeteorStartGame()
         {
+            m_MatchDisposables.Dispose();
+            m_MatchDisposables = new CompositeDisposable();
             var request = Method<string>.Call("startGame", "public");
             yield return (Coroutine) request;
             if (request.Error != null)
@@ -134,30 +247,6 @@ namespace TrainJam.Multiplayer
                 Debug.LogError($"MeteorStartGame: {request.Error.reason}");
                 yield break;
             }
-
-            // Get the match ID out of here
-            m_CurrentMatchId.Value = request.Response;
         }
-    }
-
-    public sealed class MatchDocument : MongoDocument
-    {
-        public List<string> players;
-        public string level;
-        public int round;
-    }
-
-    public sealed class LobbyDocument : MongoDocument
-    {
-        public List<ConnectionDocument> connections;
-        public int playerCount;
-        public int readyCount;
-        public string message;
-    }
-
-    public sealed class ConnectionDocument
-    {
-        public string id;
-        public bool ready;
     }
 }

@@ -1045,6 +1045,7 @@ GameObject:
   - component: {fileID: 567596395}
   - component: {fileID: 567596397}
   - component: {fileID: 567596396}
+  - component: {fileID: 567596398}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -1113,6 +1114,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 567596394}
   m_CullTransparentMesh: 0
+--- !u!114 &567596398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567596394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53173b2aa61846528f2013d973335296, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_InstantiateOnAdded: 0
+  m_DestroyOnRemoved: 0
+  m_EntityId: timeLeftClock
+  m_TimerText: {fileID: 567596396}
+  m_TimeFormat: mm\:ss
 --- !u!1 &576015615
 GameObject:
   m_ObjectHideFlags: 0
@@ -3974,7 +3992,7 @@ GameObject:
   - component: {fileID: 1493185719}
   - component: {fileID: 1493185720}
   m_Layer: 5
-  m_Name: Recipes Tray
+  m_Name: Orders Horizontal Layout Group
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5512,6 +5530,7 @@ MonoBehaviour:
   m_GameScreen: {fileID: 576015617}
   m_TutorialScreen: {fileID: 1042919339}
   m_RoundEndScreen: {fileID: 637594970}
+  m_OrdersHorizontalLayoutGroup: {fileID: 1493185719}
   m_ReadyText: {fileID: 663391832}
   m_ReadyTextTemplate: 'Players: {0} Ready of {1} Players'
   m_MessageText: {fileID: 0}

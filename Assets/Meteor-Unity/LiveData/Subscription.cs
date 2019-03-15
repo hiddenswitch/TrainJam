@@ -8,7 +8,7 @@ namespace Meteor
 	/// <summary>
 	/// A subscription handle.
 	/// </summary>
-	public class Subscription
+	public class Subscription : IDisposable
 	{
 		bool _ready;
 		/// <summary>
@@ -79,6 +79,11 @@ namespace Meteor
 
 		public Subscription ()
 		{
+		}
+
+		public void Dispose()
+		{
+			Unsubscribe(this);
 		}
 	}
 }
