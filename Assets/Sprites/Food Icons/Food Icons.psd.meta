@@ -5,7 +5,7 @@ TextureImporter:
     21300000: Tomato
     21300002: Meat
     21300004: Lettuce
-    21300006: Hamburger
+    21300006: hamburger
     21300008: Cheese
     21300010: Bread
     21300012: Pan
@@ -184,7 +184,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hamburger
+      name: hamburger
       rect:
         serializedVersion: 2
         x: 484
@@ -252,7 +252,7 @@ TextureImporter:
         width: 157
         height: 156
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

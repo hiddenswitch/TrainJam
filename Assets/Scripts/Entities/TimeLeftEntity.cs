@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -48,7 +49,7 @@ namespace TrainJam.Multiplayer.Entities
 
         protected virtual void OnElapsed()
         {
-            // TODO: Do any transitions or anything?
+            
         }
     }
 }

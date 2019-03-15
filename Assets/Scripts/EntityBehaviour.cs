@@ -36,6 +36,11 @@ namespace TrainJam.Multiplayer
         protected override void OnEnable()
         {
             base.OnEnable();
+            OnInstantiated();
+        }
+
+        internal virtual void OnInstantiated()
+        {
             if (entityId != null)
             {
                 m_Instances[entityId] = this;
@@ -80,6 +85,8 @@ namespace TrainJam.Multiplayer
             OnValuesSet(entity.values);
             OnTextSet(entity.text);
             OnTextsSet(entity.texts);
+            OnBooleanSet(entity.boolValue);
+            OnBooleansSet(entity.bools);
         }
 
         internal void OnChangedInternal(EntityDocument newEntity, IDictionary changes, string[] changedFields)
@@ -131,6 +138,14 @@ namespace TrainJam.Multiplayer
         }
 
         protected virtual void OnPlayerIdsSet(int[] playerIds)
+        {
+        }
+
+        protected virtual void OnBooleanSet(bool newValue)
+        {
+        }
+
+        protected virtual void OnBooleansSet(bool[] newValues)
         {
         }
     }
