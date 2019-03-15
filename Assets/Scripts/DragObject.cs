@@ -14,7 +14,7 @@ public class DragObject : MonoBehaviour
     private float magnitude;
     bool dragging = false;
     public float force = 2.0f;
-    Cutting lastCutting;
+    CuttingBoard m_LastCuttingBoard;
     private float grabHeight = 0.4f;
     private bool midAnim = false;
 
@@ -73,10 +73,10 @@ public class DragObject : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(transform.position, Vector3.down, out hit))
             {
-                Cutting cutting = hit.collider.gameObject.GetComponent<Cutting>();
-                if (cutting){
-                    lastCutting = cutting;
-                    lastCutting.StartCutting();
+                CuttingBoard cuttingBoard = hit.collider.gameObject.GetComponent<CuttingBoard>();
+                if (cuttingBoard){
+                    m_LastCuttingBoard = cuttingBoard;
+                    m_LastCuttingBoard.StartCutting();
                 }else
                 {
 
@@ -85,10 +85,10 @@ public class DragObject : MonoBehaviour
             }
         }else
         {
-            if (lastCutting)
+            if (m_LastCuttingBoard)
             {
-                lastCutting.StopCutting();
-                lastCutting = null;
+                m_LastCuttingBoard.StopCutting();
+                m_LastCuttingBoard = null;
             }
             //rb.isKinematic = false;
             //if (lastCutting)

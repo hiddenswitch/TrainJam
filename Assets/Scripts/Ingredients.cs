@@ -105,6 +105,7 @@ public class Ingredients : Interactable, IBeginDragHandler, IEndDragHandler, IDr
         var hitObject = lastEvenData.pointerCurrentRaycast.gameObject;
         if (hitObject)
         {
+            /*
             if (hitObject.GetComponent<CuttingBoard>() || hitObject.transform.parent.GetComponent<CuttingBoard>())
             {
                 progress += Time.deltaTime * cutSpeed;
@@ -114,6 +115,7 @@ public class Ingredients : Interactable, IBeginDragHandler, IEndDragHandler, IDr
                     FinishCut();
                 }
             }
+            */
         }
     }
 
