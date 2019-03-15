@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.44897538, g: 0.4990384, b: 0.5757083, a: 1}
+  m_IndirectSpecularColor: {r: 0.44897538, g: 0.49903893, b: 0.575709, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1066,7 +1066,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_EventMask:
     serializedVersion: 2
-    m_Bits: 1025
+    m_Bits: 1
   m_MaxRayIntersections: 0
 --- !u!1 &567596394
 GameObject:
@@ -2130,6 +2130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Collider: {fileID: 938246379}
+  m_Camera: {fileID: 514839055}
 --- !u!64 &938246379
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2981,7 +2982,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 61.3, y: 62.15139}
+  m_SizeDelta: {x: 61.3, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1231754487
 MonoBehaviour:

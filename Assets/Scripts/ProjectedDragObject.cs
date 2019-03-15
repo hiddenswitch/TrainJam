@@ -17,8 +17,6 @@ namespace TrainJam
         {
             //squishSequence = DOTween.Sequence();
             //squishSequence.Insert(0f, transform.DOScale(transform.localScale.x*0.9f, 0.05f));
-
-
             var dragging = false;
             var velocity = Vector3.zero;
             // Immediately start dragging as soon as the pointer goes down. This behaves a little differently than a
@@ -43,22 +41,12 @@ namespace TrainJam
                     {
                         return;
                     }
-                    
+
                     // Find where the pointer is on the dragging object plane, and move the object there
-                    var pointer = ContinuousStandaloneInputModule.instance.pointerEventData;
-                    var results = new List<RaycastResult>();
-                    EventSystem.current.RaycastAll(pointer, results);
-                    foreach (var raycastResult in results)
-                    {
-                        if (raycastResult.gameObject == DraggingObjectPlane.instance.gameObject)
-                        {
-                            // We found the location of the raycast on the dragging object plane. Move the object there.
-                            var position = raycastResult.worldPosition;
-                            velocity = (position - transform.position) / Time.deltaTime;
-                            transform.position = position;
-                            break;
-                        }
-                    }
+                    // We found the location of the raycast on the dragging object plane. Move the object there.
+                    var position = DraggingObjectPlane.instance.mousePositionOnPlane;
+                    velocity = (position - transform.position) / Time.deltaTime;
+                    transform.position = position;
                 })
                 .AddTo(this);
 
@@ -71,6 +59,7 @@ namespace TrainJam
                     {
                         return;
                     }
+
                     m_Rigidbody.isKinematic = false;
                     m_Rigidbody.velocity = velocity;
                 })
