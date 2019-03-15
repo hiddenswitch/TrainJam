@@ -11,7 +11,7 @@ namespace TrainJam.Multiplayer
         private static Dictionary<string, EntityBehaviour> m_Prefabs =
             new Dictionary<string, EntityBehaviour>();
 
-        private static Dictionary<string, EntityBehaviour> m_Instances = new Dictionary<string, EntityBehaviour>();
+        protected static Dictionary<string, EntityBehaviour> m_Instances = new Dictionary<string, EntityBehaviour>();
 
         [RuntimeInitializeOnLoadMethod]
         protected static void EntityBehaviourInitialize()
@@ -72,7 +72,7 @@ namespace TrainJam.Multiplayer
             OnUpdateInternal(entity, localPlayerId);
         }
 
-        private void OnUpdateInternal(EntityDocument entity, int localPlayerId)
+        internal void OnUpdateInternal(EntityDocument entity, int localPlayerId)
         {
             if (isLocalPlayer)
             {

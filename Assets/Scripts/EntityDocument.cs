@@ -5,6 +5,7 @@ namespace TrainJam.Multiplayer
     public sealed class EntityDocument : MongoDocument
     {
         public string prefab;
+        public string sceneId;
         public int[] playerIds = new int[0];
         public float[] values = new float[0];
         public string[] texts = new string[0];

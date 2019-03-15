@@ -130,17 +130,9 @@ namespace TrainJam.Multiplayer
                 {
                     entities.Find().Observe(added: (id, doc) =>
                     {
-                        if (!EntityBehaviour.instances.ContainsKey(id))
+                        var instanceId = doc.sceneId ?? doc._id;
+                        if (doc.sceneId == null)
                         {
-                            if (!prefabs.ContainsKey(doc.prefab))
-                            {
-                                Debug.LogWarning(
-                                    $"GameController: id {id}, Existing instances [{string.Join(",", EntityBehaviour.instances.Keys.ToArray())}]");
-                                Debug.LogError(
-                                    $"GameController: Missing prefab {doc.prefab} that needs an implementation of EntityBehaviour attached.");
-                                return;
-                            }
-
                             var behaviour = prefabs[doc.prefab];
                             if (behaviour.instantiateOnAdded)
                             {
@@ -156,9 +148,13 @@ namespace TrainJam.Multiplayer
                                 return;
                             }
                         }
-
-
-                        var entity = EntityBehaviour.instances[id];
+                        else
+                        {
+                            EntityBehaviour.instances[instanceId].entity = doc;
+                            EntityBehaviour.instances[instanceId].OnInstantiated();
+                        }
+                        
+                        var entity = EntityBehaviour.instances[instanceId];
                         entity.OnAddedInternal(doc, localPlayerId);
                     }, changed: (id, doc, changes, fields) =>
                     {
@@ -188,7 +184,6 @@ namespace TrainJam.Multiplayer
                         }
                     }).AddTo(m_MatchDisposables);
                     StartCoroutine(MeteorEntitiesSubscription(tuple));
-                    m_UiScreenView.Transition(m_GameScreen.screenIndex);
                 })
                 .AddTo(this);
 
