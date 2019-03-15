@@ -11,9 +11,14 @@ namespace TrainJam
     public class ProjectedDragObject : UIBehaviour, IPointerUpHandler, IPointerDownHandler
     {
         [SerializeField] private Rigidbody m_Rigidbody;
+        Sequence squishSequence;
 
         protected void Start()
         {
+            //squishSequence = DOTween.Sequence();
+            //squishSequence.Insert(0f, transform.DOScale(transform.localScale.x*0.9f, 0.05f));
+
+
             var dragging = false;
             var velocity = Vector3.zero;
             // Immediately start dragging as soon as the pointer goes down. This behaves a little differently than a
@@ -21,6 +26,7 @@ namespace TrainJam
             this.OnPointerDownAsObservable()
                 .Subscribe(pointer =>
                 {
+                    //squishSequence.Play();
                     dragging = true;
                     velocity = Vector3.zero;
                     m_Rigidbody.isKinematic = true;

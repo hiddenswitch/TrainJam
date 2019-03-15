@@ -43,7 +43,7 @@ namespace TrainJam
 
                     sequence.OnComplete(() =>
                     {
-                        FindObjectOfType<SpawnManager>().SpawnPrefab1(new Vector3(0, 6, 0));
+                        FindObjectOfType<SpawnManager>().SpawnPrefab1(new Vector3(0.15f, 6, 2.66f));
                         if (gameObject != null)
                         {
                             Destroy(gameObject);                            

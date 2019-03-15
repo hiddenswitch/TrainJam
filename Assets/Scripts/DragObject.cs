@@ -76,7 +76,7 @@ public class DragObject : MonoBehaviour
                 CuttingBoard cuttingBoard = hit.collider.gameObject.GetComponent<CuttingBoard>();
                 if (cuttingBoard){
                     m_LastCuttingBoard = cuttingBoard;
-                    m_LastCuttingBoard.StartCutting();
+//                    m_LastCuttingBoard.StartCutting();
                 }else
                 {
 

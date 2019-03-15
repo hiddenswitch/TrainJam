@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using UniRx;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CuttingBoard : MonoBehaviour
 {
@@ -11,9 +13,11 @@ public class CuttingBoard : MonoBehaviour
 
     Sequence sequence;
     [SerializeField] private Vector3 m_EndValue;
+    [SerializeField] private Image progressBar;
 
     private void Start()
     {
+
         sequence = DOTween.Sequence();
 
         var tween = knife.transform.DOLocalRotate(m_EndValue, 0.1f, RotateMode.Fast);
@@ -23,8 +27,10 @@ public class CuttingBoard : MonoBehaviour
         //knife.gameObject.SetActive(false);
     }
 
-    public void StartCutting()
+    public void StartCutting(float progress)
     {
+        progressBar.fillAmount = progress;
+
         if (!cutting)
         {
             //knife.gameObject.SetActive(true);
@@ -35,6 +41,7 @@ public class CuttingBoard : MonoBehaviour
 
     public void StopCutting()
     {
+        progressBar.fillAmount = 0;
         if (cutting)
         {
             //knife.gameObject.SetActive(false);

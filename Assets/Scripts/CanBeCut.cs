@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
@@ -13,6 +14,9 @@ namespace TrainJam
         [SerializeField] private LayerMask m_RaycastLayers;
         [SerializeField] private float m_RaycastDepth = 10f;
         private CuttingBoard m_CuttingBoard = null;
+
+        [SerializeField] private float progressSpeed = 0.3f;
+        private float progress = 0;
 
         protected override void Start()
         {
@@ -41,7 +45,9 @@ namespace TrainJam
                         {
                             return;
                         }
-                        m_CuttingBoard.StartCutting();
+                        progress += progressSpeed * Time.fixedDeltaTime;
+                        progress = Mathf.Clamp(progress, 0, 1);
+                        m_CuttingBoard.StartCutting(progress);
                     }
                     else if (m_CuttingBoard != null)
                     {
