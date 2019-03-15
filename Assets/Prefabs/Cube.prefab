@@ -76,8 +76,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 2033280670048544325}
-  force: 20
-  prefab: {fileID: 2033280670048510177}
+  force: 25
 --- !u!1 &2033280670048510179
 GameObject:
   m_ObjectHideFlags: 0

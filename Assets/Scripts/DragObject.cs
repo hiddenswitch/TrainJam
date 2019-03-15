@@ -41,7 +41,7 @@ public class DragObject : MonoBehaviour
         pos.y = grabHeight;
         transform.position = pos;
 
-        transform.eulerAngles = new Vector3(0, 180, 0);
+        transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
         dir = (transform.position - lastPosition).normalized;
         magnitude = (transform.position - lastPosition).magnitude;
         lastPosition = transform.position;
@@ -79,13 +79,17 @@ public class DragObject : MonoBehaviour
                     lastCutting.StartCutting();
                 }else
                 {
-                    if (lastCutting)
-                    lastCutting.StopCutting();
+
                 }
                 //print(hit.collider.gameObject.name);
             }
         }else
         {
+            if (lastCutting)
+            {
+                lastCutting.StopCutting();
+                lastCutting = null;
+            }
             //rb.isKinematic = false;
             //if (lastCutting)
             //    lastCutting.StopCutting();
@@ -106,6 +110,20 @@ public class DragObject : MonoBehaviour
 
                 });
                 transform.DOMove(col.gameObject.transform.position + new Vector3(0, 0.5f, 0), 0.5f);
+            }
+
+            if (col.gameObject.GetComponent<Pan>())
+            {
+                var pan = col.gameObject.GetComponent<Pan>();
+                midAnim = true;
+
+                /*transform.DOScale(0, 1f).OnComplete(() =>
+                {
+                    FindObjectOfType<SpawnManager>().SpawnPrefab1(new Vector3(0, 6, 0));
+                    //Destroy(this.gameObject);
+
+                });*/
+                transform.DOMove(pan.centerPosition.position, 0.5f).OnComplete(() => {  });
             }
         }
 
