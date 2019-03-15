@@ -9,12 +9,16 @@ namespace TrainJam
     [RequireComponent(typeof(Collider))]
     public sealed class CanBeTrashed : UIBehaviour
     {
+        private ProjectedDragObject dragObject;
+
         protected override void Start()
         {
+            dragObject = GetComponent<ProjectedDragObject>();
+
             base.Start();
 
             var used = false;
-            this.OnTriggerEnterAsObservable()
+            this.OnTriggerStayAsObservable()
                 .Subscribe(col =>
                 {
                     if (used)
@@ -22,14 +26,19 @@ namespace TrainJam
                         return;
                     }
 
-                    used = true;
-                    // Check if we're triggering a trash
+                    if (dragObject && dragObject.dragging)
+                    {
+                        return;
+                    }
+
                     if (!col.gameObject.GetComponent<Trash>())
                     {
                         return;
                     }
 
-                    // Set me to kinematic just in case
+                    used = true;
+
+                    Destroy(dragObject);
                     var rigidbody = GetComponent<Rigidbody>();
                     if (rigidbody)
                     {
@@ -43,7 +52,12 @@ namespace TrainJam
 
                     sequence.OnComplete(() =>
                     {
-                        FindObjectOfType<SpawnManager>().SpawnPrefab1(new Vector3(0.15f, 6, 2.66f));
+                        Ingredient ingredient = GetComponent<Ingredient>();
+                        if (ingredient)
+                        {
+                            FindObjectOfType<SpawnManager>().SpawnIngredient(ingredient.type, new Vector3(0.15f, 6, 2.66f));
+                        }
+                        
                         if (gameObject != null)
                         {
                             Destroy(gameObject);                            

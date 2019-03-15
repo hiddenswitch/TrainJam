@@ -15,8 +15,11 @@ namespace TrainJam
         [SerializeField] private float m_RaycastDepth = 10f;
         private CuttingBoard m_CuttingBoard = null;
 
-        [SerializeField] private float progressSpeed = 0.3f;
+        private float progressSpeed = 0.5f;
         private float progress = 0;
+        public bool notCuttableOrFinished = false;
+
+        public GameObject resultObject;
 
         protected override void Start()
         {
@@ -47,7 +50,17 @@ namespace TrainJam
                         }
                         progress += progressSpeed * Time.fixedDeltaTime;
                         progress = Mathf.Clamp(progress, 0, 1);
-                        m_CuttingBoard.StartCutting(progress);
+                        m_CuttingBoard.StartCutting(progress, notCuttableOrFinished);
+                        if (progress >= 1 && !notCuttableOrFinished)
+                        {
+                            if (resultObject)
+                            {
+                                Instantiate(resultObject, transform.position, transform.rotation);
+                                Destroy(this.gameObject);
+                            }
+                            notCuttableOrFinished = true;
+                            
+                        }
                     }
                     else if (m_CuttingBoard != null)
                     {

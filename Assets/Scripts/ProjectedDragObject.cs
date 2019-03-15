@@ -12,12 +12,13 @@ namespace TrainJam
     {
         [SerializeField] private Rigidbody m_Rigidbody;
         Sequence squishSequence;
+        public bool dragging = false;
 
         protected void Start()
         {
             //squishSequence = DOTween.Sequence();
             //squishSequence.Insert(0f, transform.DOScale(transform.localScale.x*0.9f, 0.05f));
-            var dragging = false;
+
             var velocity = Vector3.zero;
             // Immediately start dragging as soon as the pointer goes down. This behaves a little differently than a
             // proper drag, which is less responsive (it requires a delay to elapse).

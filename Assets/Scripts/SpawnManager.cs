@@ -1,13 +1,43 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnManager : MonoBehaviour
+namespace TrainJam
 {
-    public GameObject prefab1;
-
-    public void SpawnPrefab1(Vector3 position)
+    public class SpawnManager : MonoBehaviour
     {
-        Instantiate(prefab1, position, Random.rotation);
+        [SerializeField] private Ingredient[] IngredientPrefabs;
+        private Dictionary<IngredientType, GameObject> IngredientPrefabsDict = new Dictionary<IngredientType, GameObject>();
+
+        public Transform spawnTransform;
+
+        public GameObject[] particleEffects;
+
+        private void Awake()
+        {
+            foreach(var prefab in IngredientPrefabs)
+            {
+                IngredientPrefabsDict.Add(prefab.type, prefab.gameObject);
+            }
+        }
+
+        public void SpawnIngredient(IngredientType type, Vector3 position)
+        {
+            Instantiate(IngredientPrefabsDict[type], position, Random.rotation);
+        }
+
+        public void SpawnIngredientAtSpawnPosition(IngredientType type)
+        {
+            SpawnIngredient(type, spawnTransform.position);
+        }
+        private int counter = 64;
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                var go = Instantiate(particleEffects[counter], spawnTransform.position, Quaternion.identity);
+                go.SetActive(true);
+                counter++;
+            }
+        }
     }
 }
