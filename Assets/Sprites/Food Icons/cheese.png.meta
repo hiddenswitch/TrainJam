@@ -1,18 +1,12 @@
 fileFormatVersion: 2
-guid: c5f8c5295cee94ad6bb2d37c5fa1fdf2
+guid: e434b31763fb846848571dc817e2ddc3
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Tomato
-    21300002: Meat
-    21300004: Lettuce
-    21300006: hamburger
-    21300008: Cheese
-    21300010: Bread
-    21300012: Pan
+    21300000: cheese
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
-    mipMapMode: 1
+    mipMapMode: 0
     enableMipMap: 1
     sRGBTexture: 1
     linearTexture: 0
@@ -38,8 +32,8 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 2
-    aniso: 4
+    filterMode: -1
+    aniso: -1
     mipBias: -100
     wrapU: 1
     wrapV: 1
@@ -48,8 +42,8 @@ TextureImporter:
   lightmap: 0
   compressionQuality: 50
   spriteMode: 2
-  spriteExtrude: 8
-  spriteMeshType: 0
+  spriteExtrude: 1
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
@@ -124,141 +118,21 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Tomato
+      name: cheese
       rect:
         serializedVersion: 2
-        x: 5
-        y: 651
-        width: 149
-        height: 138
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a1f7a83a55a484f4e8b90a59e09d32c1
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Meat
-      rect:
-        serializedVersion: 2
-        x: 163
-        y: 640
+        x: 89
+        y: 105
         width: 154
-        height: 153
+        height: 155
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 14a12e90f9e42476e9d7ce8deb545615
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Lettuce
-      rect:
-        serializedVersion: 2
-        x: 322
-        y: 638
-        width: 150
-        height: 152
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b974f07fde3ce42548bccf4ad13545ac
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: hamburger
-      rect:
-        serializedVersion: 2
-        x: 484
-        y: 641
-        width: 144
-        height: 146
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7c77873de168e44439829392101ea85b
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Cheese
-      rect:
-        serializedVersion: 2
-        x: 638
-        y: 671
-        width: 155
-        height: 113
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: dfba88c55a1b24f59a023251c844c4f1
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Bread
-      rect:
-        serializedVersion: 2
-        x: 6
-        y: 474
-        width: 138
-        height: 157
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 93b5e2eabb86c488bb57518b1be5bd47
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Pan
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 469
-        width: 157
-        height: 156
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1d87629e27d994e2da82729091efe36c
+      spriteID: 44cf570bded9243cc8be5f5b99bf8d1e
       vertices: []
       indices: 
       edges: []
@@ -266,7 +140,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: e81e59ff7d57f40b9a75c7ce2386dcd3
+    spriteID: e6187741c317b4faa9b7bf52fffef53d
     vertices: []
     indices: 
     edges: []

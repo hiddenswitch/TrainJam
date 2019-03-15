@@ -1,8 +1,8 @@
 fileFormatVersion: 2
-guid: eb3054e9bdc8a4931923083b92ed8815
+guid: f38016568fcb0400fbcd21714c3b85f1
 TextureImporter:
   fileIDToRecycleName:
-    21300000: cheeseburger
+    21300000: uncooked meat
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -118,13 +118,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: cheeseburger
+      name: uncooked meat
       rect:
         serializedVersion: 2
-        x: 71
-        y: 83
+        x: 79
+        y: 109
         width: 190
-        height: 158
+        height: 90
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -132,7 +132,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 76d625d535144456da9fd2cf82564f86
+      spriteID: 8cfb485fe01bd45048ceb6720e3e1bff
       vertices: []
       indices: 
       edges: []
@@ -140,7 +140,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: b719953e765f646baaef92fadcd80dff
+    spriteID: 0f167b7ddb7344bc09ed91f4cae58957
     vertices: []
     indices: 
     edges: []

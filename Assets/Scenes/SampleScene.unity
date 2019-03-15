@@ -754,7 +754,7 @@ MonoBehaviour:
     m_Top: 4
     m_Bottom: 4
   m_ChildAlignment: 1
-  m_Spacing: 0
+  m_Spacing: 7
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 1
@@ -779,7 +779,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 0f6fa99e819af4c66be08d054c7652dc, type: 3}
+  m_Sprite: {fileID: 21300006, guid: d4355ad719a9f49698d467e27ba563d5, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3522,7 +3522,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300006, guid: c5f8c5295cee94ad6bb2d37c5fa1fdf2, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5429,16 +5429,12 @@ MonoBehaviour:
   m_Url: ws://localhost:3000/websocket
   m_Sprites:
   - {fileID: 21300000, guid: ee6704aea6e2f42a5bce0588c32cb4bc, type: 3}
+  - {fileID: 21300000, guid: e434b31763fb846848571dc817e2ddc3, type: 3}
   - {fileID: 21300000, guid: eb3054e9bdc8a4931923083b92ed8815, type: 3}
-  - {fileID: 21300000, guid: 6610465da07914597837f87071207054, type: 3}
-  - {fileID: 21300010, guid: c5f8c5295cee94ad6bb2d37c5fa1fdf2, type: 3}
-  - {fileID: 21300000, guid: 21e43c47b754f488ca8df87c644e1a4e, type: 3}
-  - {fileID: 21300008, guid: c5f8c5295cee94ad6bb2d37c5fa1fdf2, type: 3}
-  - {fileID: 21300006, guid: c5f8c5295cee94ad6bb2d37c5fa1fdf2, type: 3}
-  - {fileID: 21300004, guid: c5f8c5295cee94ad6bb2d37c5fa1fdf2, type: 3}
-  - {fileID: 21300002, guid: c5f8c5295cee94ad6bb2d37c5fa1fdf2, type: 3}
-  - {fileID: 21300012, guid: c5f8c5295cee94ad6bb2d37c5fa1fdf2, type: 3}
-  - {fileID: 21300000, guid: c5f8c5295cee94ad6bb2d37c5fa1fdf2, type: 3}
+  - {fileID: 21300000, guid: b9163a7829e1246d98193a439c22115d, type: 3}
+  - {fileID: 21300000, guid: f18e7a86599904dc8a6ad2090de150b8, type: 3}
+  - {fileID: 21300000, guid: dc9095f8e956b449e95c42fdf43a6b5d, type: 3}
+  - {fileID: 21300000, guid: f38016568fcb0400fbcd21714c3b85f1, type: 3}
   m_UiScreenView: {fileID: 926678891}
   m_ConnectingScreen: {fileID: 1629936646}
   m_LobbyScreen: {fileID: 1894291853}
