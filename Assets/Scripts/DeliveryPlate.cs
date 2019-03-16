@@ -42,7 +42,7 @@ namespace TrainJam
 
         private void UpdateIngredientDisplay()
         {
-            nextText.text = neededIngredients[ingredientIndex].ToString();
+            nextText.text = Misc.GetNameFromIngredientType(neededIngredients[ingredientIndex]);
         }
     }
 }
