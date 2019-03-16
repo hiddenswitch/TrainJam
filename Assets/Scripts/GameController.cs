@@ -24,6 +24,8 @@ namespace TrainJam.Multiplayer
 
         [SerializeField] private string m_Url = "ws://localhost:3000/websocket";
 
+        [Header("References")] [SerializeField]
+        private Sprite[] m_Sprites;
 
         [Header("UI Settings")] [SerializeField]
         private ScreenView m_UiScreenView;
@@ -33,7 +35,6 @@ namespace TrainJam.Multiplayer
         [SerializeField] private MaterialScreen m_GameScreen;
         [SerializeField] private MaterialScreen m_TutorialScreen;
         [SerializeField] private MaterialScreen m_RoundEndScreen;
-        [SerializeField] private RectTransform m_OrdersHorizontalLayoutGroup;
 
         [Header("Lobby Settings")] [SerializeField]
         private Text m_ReadyText;
@@ -49,7 +50,6 @@ namespace TrainJam.Multiplayer
 
         public int localPlayerId => m_CurrentPlayerId.Value;
 
-        public RectTransform OrdersHorizontalLayoutGroup => m_OrdersHorizontalLayoutGroup;
         public string matchId => m_CurrentMatchId.Value;
 
         protected override void Awake()
@@ -110,6 +110,17 @@ namespace TrainJam.Multiplayer
 
             // Keeps track of the instantiated entity objects
             var entities = new Collection<EntityDocument>("entities");
+            var prefabs = new Dictionary<string, EntityBehaviour>();
+            foreach (var kv in EntityBehaviour.prefabs)
+            {
+                prefabs[kv.Key] = kv.Value;
+            }
+
+            foreach (var kv in InSceneEntityPrefabs.prefabs)
+            {
+                prefabs[kv.Key] = kv.Value;
+            }
+
             // First, subscribe to the entities as soon as we have a valid player id and match id
             Observable.Zip(m_CurrentPlayerId, m_CurrentMatchId,
                     (playerId, matchId) => new Tuple<int, string>(playerId, matchId))
@@ -119,22 +130,16 @@ namespace TrainJam.Multiplayer
                 {
                     entities.Find().Observe(added: (id, doc) =>
                     {
-                        if (!EntityBehaviour.instances.ContainsKey(id))
+                        var instanceId = doc.sceneId ?? doc._id;
+                        if (doc.sceneId == null)
                         {
-                            if (!EntityBehaviour.prefabs.ContainsKey(doc.prefab))
-                            {
-                                Debug.LogWarning(
-                                    $"GameController: id {id}, Existing instances [{string.Join(",", EntityBehaviour.instances.Keys.ToArray())}]");
-                                Debug.LogError(
-                                    $"GameController: Missing prefab {doc.prefab} that needs an implementation of EntityBehaviour attached.");
-                                return;
-                            }
-
-                            var behaviour = EntityBehaviour.prefabs[doc.prefab];
+                            var behaviour = prefabs[doc.prefab];
                             if (behaviour.instantiateOnAdded)
                             {
                                 // Calls start which adds it to the EntityBehaviour.instances dict
-                                Instantiate(behaviour);
+                                var instance = Instantiate(behaviour);
+                                instance.entity = doc;
+                                instance.OnInstantiated();
                             }
                             else
                             {
@@ -143,9 +148,13 @@ namespace TrainJam.Multiplayer
                                 return;
                             }
                         }
-
-
-                        var entity = EntityBehaviour.instances[id];
+                        else
+                        {
+                            EntityBehaviour.instances[instanceId].entity = doc;
+                            EntityBehaviour.instances[instanceId].OnInstantiated();
+                        }
+                        
+                        var entity = EntityBehaviour.instances[instanceId];
                         entity.OnAddedInternal(doc, localPlayerId);
                     }, changed: (id, doc, changes, fields) =>
                     {
@@ -175,7 +184,6 @@ namespace TrainJam.Multiplayer
                         }
                     }).AddTo(m_MatchDisposables);
                     StartCoroutine(MeteorEntitiesSubscription(tuple));
-                    m_UiScreenView.Transition(m_GameScreen.screenIndex);
                 })
                 .AddTo(this);
 
@@ -247,6 +255,18 @@ namespace TrainJam.Multiplayer
                 Debug.LogError($"MeteorStartGame: {request.Error.reason}");
                 yield break;
             }
+        }
+
+        public void SetBool(string entityId, int index, bool newBool)
+        {
+            StartCoroutine(MeteorSetBool(entityId, index, newBool));
+            // TODO: Local simulation?!
+        }
+
+        private IEnumerator MeteorSetBool(string entityId, int index, bool newBool)
+        {
+            var request = Method<int>.Call("setBool", entityId, index, newBool);
+            yield return (Coroutine) request;
         }
     }
 }

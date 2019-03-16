@@ -11,7 +11,7 @@ namespace TrainJam.Multiplayer
         private static Dictionary<string, EntityBehaviour> m_Prefabs =
             new Dictionary<string, EntityBehaviour>();
 
-        private static Dictionary<string, EntityBehaviour> m_Instances = new Dictionary<string, EntityBehaviour>();
+        protected static Dictionary<string, EntityBehaviour> m_Instances = new Dictionary<string, EntityBehaviour>();
 
         [RuntimeInitializeOnLoadMethod]
         protected static void EntityBehaviourInitialize()
@@ -36,6 +36,11 @@ namespace TrainJam.Multiplayer
         protected override void OnEnable()
         {
             base.OnEnable();
+            OnInstantiated();
+        }
+
+        internal virtual void OnInstantiated()
+        {
             if (entityId != null)
             {
                 m_Instances[entityId] = this;
@@ -67,7 +72,7 @@ namespace TrainJam.Multiplayer
             OnUpdateInternal(entity, localPlayerId);
         }
 
-        private void OnUpdateInternal(EntityDocument entity, int localPlayerId)
+        internal void OnUpdateInternal(EntityDocument entity, int localPlayerId)
         {
             if (isLocalPlayer)
             {
@@ -80,6 +85,8 @@ namespace TrainJam.Multiplayer
             OnValuesSet(entity.values);
             OnTextSet(entity.text);
             OnTextsSet(entity.texts);
+            OnBooleanSet(entity.boolValue);
+            OnBooleansSet(entity.bools);
         }
 
         internal void OnChangedInternal(EntityDocument newEntity, IDictionary changes, string[] changedFields)
@@ -104,6 +111,7 @@ namespace TrainJam.Multiplayer
 
         protected virtual void OnAdded(EntityDocument entity, int localPlayerId)
         {
+            
         }
 
         protected virtual void OnValueSet(float newValue)
@@ -131,6 +139,14 @@ namespace TrainJam.Multiplayer
         }
 
         protected virtual void OnPlayerIdsSet(int[] playerIds)
+        {
+        }
+
+        protected virtual void OnBooleanSet(bool newValue)
+        {
+        }
+
+        protected virtual void OnBooleansSet(bool[] newValues)
         {
         }
     }

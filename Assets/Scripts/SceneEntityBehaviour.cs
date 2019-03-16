@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace TrainJam.Multiplayer
 {
@@ -11,18 +12,40 @@ namespace TrainJam.Multiplayer
     /// </summary>
     public abstract class SceneEntityBehaviour : EntityBehaviour
     {
-        [SerializeField] protected string m_EntityId;
-        internal override string entityId => $"{GameController.instance.matchId ?? ""}/{m_EntityId}";
+        [FormerlySerializedAs("m_EntityId")] [SerializeField]
+        protected string m_SceneId;
+
+        internal override string canonicalName => m_SceneId;
         internal override bool instantiateOnAdded => false;
         internal override bool destroyOnRemoved => false;
 
+        protected override void Awake()
+        {
+            m_Instances[m_SceneId] = this;
+        }
+
         protected override void OnEnable()
         {
-            if (GameController.instance?.matchId == null)
+        }
+
+        protected override void OnRemoved()
+        {
+            base.OnRemoved();
+            if (entityId != null && m_Instances.ContainsKey(entityId))
             {
-                return;
+                m_Instances.Remove(entityId);
             }
-            base.OnEnable();
+
+            entity = null;
+        }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+            if (m_Instances.ContainsKey(m_SceneId))
+            {
+                m_Instances.Remove(m_SceneId);
+            }
         }
     }
 }
