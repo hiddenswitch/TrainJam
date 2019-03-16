@@ -10,8 +10,6 @@ namespace TrainJam
 
         public Transform spawnTransform;
 
-        public GameObject[] particleEffects;
-
         private void Awake()
         {
             foreach(var prefab in IngredientPrefabs)
@@ -28,16 +26,6 @@ namespace TrainJam
         public void SpawnIngredientAtSpawnPosition(IngredientType type)
         {
             SpawnIngredient(type, spawnTransform.position);
-        }
-        private int counter = 64;
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                var go = Instantiate(particleEffects[counter], spawnTransform.position, Quaternion.identity);
-                go.SetActive(true);
-                counter++;
-            }
         }
     }
 }
