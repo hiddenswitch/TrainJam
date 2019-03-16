@@ -11,5 +11,30 @@ namespace TrainJam
         {
             Application.targetFrameRate = 60;
         }
+
+        public static string GetNameFromIngredientType(IngredientType type)
+        {
+            switch(type)
+            {
+                case IngredientType.BlockOfBread:
+                    return "Loaf of Bread";
+                case IngredientType.BlockOfCheese:
+                    return "Brick of Cheese";
+                case IngredientType.BlockOfLettuce:
+                    return "Block of Lettuce";
+                case IngredientType.Bun:
+                    return "Slice of Bread";
+                case IngredientType.HamBurger:
+                    return "Ham Burger";
+                case IngredientType.CheeseBurger:
+                    return "Cheese Burger";
+                case IngredientType.SliceOfCheese:
+                    return "Slice Of Cheese";
+                case IngredientType.SliceOfLettuce:
+                    return "Slice Of Lettuce";
+                default:
+                    return "No Name";
+            }
+        }
     }
 }
