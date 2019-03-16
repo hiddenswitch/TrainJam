@@ -113,7 +113,6 @@ namespace TrainJam.Multiplayer.Entities
                 .Subscribe(v1 =>
                 {
                     // Move to active
-                    Debug.Log($"fired {entityId}");
                     transform.SetParent(m_ActiveOrdersParent, false);
                     transform.SetAsLastSibling();
                     // Start warning timer
@@ -151,7 +150,6 @@ namespace TrainJam.Multiplayer.Entities
 
             if (finished || failed)
             {
-                Debug.Log($"finished: {finished}, failed: {failed}");
                 // TODO: Do something special if the user failed an order
                 if (failed)
                 {

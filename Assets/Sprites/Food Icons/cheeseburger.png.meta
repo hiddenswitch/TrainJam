@@ -2,7 +2,7 @@ fileFormatVersion: 2
 guid: eb3054e9bdc8a4931923083b92ed8815
 TextureImporter:
   fileIDToRecycleName:
-    21300000: cheeseburger
+    21300000: CheeseBurger
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -118,7 +118,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: cheeseburger
+      name: CheeseBurger
       rect:
         serializedVersion: 2
         x: 71

@@ -2,7 +2,7 @@ fileFormatVersion: 2
 guid: e434b31763fb846848571dc817e2ddc3
 TextureImporter:
   fileIDToRecycleName:
-    21300000: cheese
+    21300000: BlockOfCheese
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -118,7 +118,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: cheese
+      name: BlockOfCheese
       rect:
         serializedVersion: 2
         x: 89
@@ -126,7 +126,7 @@ TextureImporter:
         width: 154
         height: 155
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

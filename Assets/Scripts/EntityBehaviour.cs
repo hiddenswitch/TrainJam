@@ -8,17 +8,10 @@ namespace TrainJam.Multiplayer
 {
     public abstract class EntityBehaviour : UIBehaviour
     {
-        private static Dictionary<string, EntityBehaviour> m_Prefabs =
-            new Dictionary<string, EntityBehaviour>();
+        private static Dictionary<string, EntityBehaviour> m_Prefabs;
 
         protected static Dictionary<string, EntityBehaviour> m_Instances = new Dictionary<string, EntityBehaviour>();
 
-        [RuntimeInitializeOnLoadMethod]
-        protected static void EntityBehaviourInitialize()
-        {
-            m_Prefabs = Resources.FindObjectsOfTypeAll<EntityBehaviour>()
-                .ToDictionary(eb => eb.canonicalName, eb => eb);
-        }
 
         [SerializeField] protected bool m_InstantiateOnAdded = true;
         [SerializeField] protected bool m_DestroyOnRemoved = true;
@@ -26,7 +19,20 @@ namespace TrainJam.Multiplayer
         /// <summary>
         /// Prefabs by name as specified in <see cref="canonicalName"/> (defaults to the game object's name).
         /// </summary>
-        public static IReadOnlyDictionary<string, EntityBehaviour> prefabs => m_Prefabs;
+        public static IReadOnlyDictionary<string, EntityBehaviour> prefabs
+        {
+            get
+            {
+                if (m_Prefabs == null)
+                {
+                    m_Prefabs = Resources.FindObjectsOfTypeAll<EntityBehaviour>()
+                        .ToDictionary(eb => eb.canonicalName, eb => eb);
+                    Debug.Log($"EntityBehaviour: Loaded {m_Prefabs.Count} prefabs: {string.Join(",", m_Prefabs.Keys)}");
+                }
+
+                return m_Prefabs;
+            }
+        }
 
         /// <summary>
         /// Instances by entity document ID
@@ -111,7 +117,6 @@ namespace TrainJam.Multiplayer
 
         protected virtual void OnAdded(EntityDocument entity, int localPlayerId)
         {
-            
         }
 
         protected virtual void OnValueSet(float newValue)

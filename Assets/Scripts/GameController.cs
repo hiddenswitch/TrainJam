@@ -26,6 +26,7 @@ namespace TrainJam.Multiplayer
 
         [Header("References")] [SerializeField]
         private Sprite[] m_Sprites;
+        [SerializeField] private EntityBehaviour[] m_Prefabs;
 
         [Header("UI Settings")] [SerializeField]
         private ScreenView m_UiScreenView;
@@ -49,6 +50,7 @@ namespace TrainJam.Multiplayer
         private CompositeDisposable m_MatchDisposables = new CompositeDisposable();
 
         public int localPlayerId => m_CurrentPlayerId.Value;
+        public IReadOnlyReactiveProperty<int> localPlayerReactiveId => m_CurrentPlayerId;
 
         public string matchId => m_CurrentMatchId.Value;
 
@@ -102,7 +104,6 @@ namespace TrainJam.Multiplayer
             matches.Find().Observe(added:
                     (id, document) =>
                     {
-                        Debug.Log($"Matches: {id}, {document._id}");
                         m_CurrentMatchId.Value = document._id;
                         m_CurrentPlayerId.Value = Array.IndexOf(document.players, connectionId.Value);
                     }, changed: (id, document, values, keys) => { })
@@ -153,7 +154,7 @@ namespace TrainJam.Multiplayer
                             EntityBehaviour.instances[instanceId].entity = doc;
                             EntityBehaviour.instances[instanceId].OnInstantiated();
                         }
-                        
+
                         var entity = EntityBehaviour.instances[instanceId];
                         entity.OnAddedInternal(doc, localPlayerId);
                     }, changed: (id, doc, changes, fields) =>
@@ -204,6 +205,7 @@ namespace TrainJam.Multiplayer
         private IEnumerator MeteorEntitiesSubscription(Tuple<int, string> tuple)
         {
             // This subscription takes a match id, followed by a player id
+            Debug.Log($"MeteorEntitiesSubscription: Subscribing to entities with matchId {tuple.Item2}, playerId {tuple.Item1}");
             var sub = Subscription.Subscribe("entities", tuple.Item2, tuple.Item1);
             sub.AddTo(m_MatchDisposables);
             yield return (Coroutine) sub;
@@ -266,6 +268,17 @@ namespace TrainJam.Multiplayer
         private IEnumerator MeteorSetBool(string entityId, int index, bool newBool)
         {
             var request = Method<int>.Call("setBool", entityId, index, newBool);
+            yield return (Coroutine) request;
+        }
+
+        public void Instantiate(int toPlayerId, string prefabToInstantiate)
+        {
+            StartCoroutine(MeteorInstantiate(toPlayerId, prefabToInstantiate));
+        }
+
+        private IEnumerator MeteorInstantiate(int toPlayerId, string prefabToInstantiate)
+        {
+            var request = Method<string>.Call("teleport", matchId, toPlayerId, prefabToInstantiate);
             yield return (Coroutine) request;
         }
     }

@@ -2,7 +2,7 @@ fileFormatVersion: 2
 guid: dc9095f8e956b449e95c42fdf43a6b5d
 TextureImporter:
   fileIDToRecycleName:
-    21300000: sliced cheese
+    21300000: SliceOfCheese
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -118,7 +118,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: sliced cheese
+      name: SliceOfCheese
       rect:
         serializedVersion: 2
         x: 70

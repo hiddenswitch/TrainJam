@@ -2,7 +2,7 @@ fileFormatVersion: 2
 guid: f18e7a86599904dc8a6ad2090de150b8
 TextureImporter:
   fileIDToRecycleName:
-    21300000: hamburger
+    21300000: HamBurger
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -118,7 +118,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: hamburger
+      name: HamBurger
       rect:
         serializedVersion: 2
         x: 57

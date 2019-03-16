@@ -2,7 +2,7 @@ fileFormatVersion: 2
 guid: ee6704aea6e2f42a5bce0588c32cb4bc
 TextureImporter:
   fileIDToRecycleName:
-    21300000: buns
+    21300000: Bun
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -118,7 +118,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: buns
+      name: Bun
       rect:
         serializedVersion: 2
         x: 79
@@ -126,7 +126,7 @@ TextureImporter:
         width: 187
         height: 123
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

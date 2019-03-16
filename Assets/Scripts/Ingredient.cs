@@ -15,6 +15,7 @@ namespace TrainJam
         SliceOfCheese,
         BlockOfLettuce,
         SliceOfLettuce,
-        Burger
+        CheeseBurger,
+        HamBurger
     }
 }

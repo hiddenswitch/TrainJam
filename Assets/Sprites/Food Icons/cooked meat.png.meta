@@ -2,7 +2,7 @@ fileFormatVersion: 2
 guid: b9163a7829e1246d98193a439c22115d
 TextureImporter:
   fileIDToRecycleName:
-    21300000: cooked meat
+    21300000: CookedMeat
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -118,7 +118,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: cooked meat
+      name: CookedMeat
       rect:
         serializedVersion: 2
         x: 67
