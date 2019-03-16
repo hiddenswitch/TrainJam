@@ -539,7 +539,7 @@ GameObject:
   - component: {fileID: 4048783560403379189}
   - component: {fileID: 4048783560403378187}
   m_Layer: 9
-  m_Name: Plate
+  m_Name: DeliveryPlate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -588,10 +588,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nextText: {fileID: 4048783559168102462}
-  successEffect: {fileID: 1000013112717626, guid: 09a6862c157b84949bf997f313c4a39a,
-    type: 3}
+  successEffect: {fileID: 0}
   effectPosition: {fileID: 4048783559046237000}
-  neededIngredients: 010000000300000001000000
+  neededIngredients: 010000000300000008000000
 --- !u!1 &4048783560413389347
 GameObject:
   m_ObjectHideFlags: 0

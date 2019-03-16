@@ -25,9 +25,9 @@ namespace TrainJam
                 case IngredientType.Bun:
                     return "Slice of Bread";
                 case IngredientType.HamBurger:
-                    return "Ham Burger";
+                    return "Hamburger";
                 case IngredientType.CheeseBurger:
-                    return "Cheese Burger";
+                    return "Cheeseburger";
                 case IngredientType.SliceOfCheese:
                     return "Slice Of Cheese";
                 case IngredientType.SliceOfLettuce:

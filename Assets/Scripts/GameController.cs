@@ -26,6 +26,7 @@ namespace TrainJam.Multiplayer
 
         [Header("References")] [SerializeField]
         private Sprite[] m_Sprites;
+
         [SerializeField] private EntityBehaviour[] m_Prefabs;
 
         [Header("UI Settings")] [SerializeField]
@@ -205,7 +206,8 @@ namespace TrainJam.Multiplayer
         private IEnumerator MeteorEntitiesSubscription(Tuple<int, string> tuple)
         {
             // This subscription takes a match id, followed by a player id
-            Debug.Log($"MeteorEntitiesSubscription: Subscribing to entities with matchId {tuple.Item2}, playerId {tuple.Item1}");
+            Debug.Log(
+                $"MeteorEntitiesSubscription: Subscribing to entities with matchId {tuple.Item2}, playerId {tuple.Item1}");
             var sub = Subscription.Subscribe("entities", tuple.Item2, tuple.Item1);
             sub.AddTo(m_MatchDisposables);
             yield return (Coroutine) sub;
@@ -279,6 +281,17 @@ namespace TrainJam.Multiplayer
         private IEnumerator MeteorInstantiate(int toPlayerId, string prefabToInstantiate)
         {
             var request = Method<string>.Call("teleport", matchId, toPlayerId, prefabToInstantiate);
+            yield return (Coroutine) request;
+        }
+
+        public void Deliver(string orderId)
+        {
+            StartCoroutine(orderId);
+        }
+
+        public IEnumerator MeteorDeliver(string orderEntityId)
+        {
+            var request = Method<string>.Call("delivery", orderEntityId);
             yield return (Coroutine) request;
         }
     }
