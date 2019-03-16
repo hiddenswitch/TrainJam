@@ -111,6 +111,7 @@ namespace TrainJam.Multiplayer
 
         protected virtual void OnAdded(EntityDocument entity, int localPlayerId)
         {
+            
         }
 
         protected virtual void OnValueSet(float newValue)
