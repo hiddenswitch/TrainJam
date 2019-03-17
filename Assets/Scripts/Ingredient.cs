@@ -5,6 +5,7 @@ namespace TrainJam
     public class Ingredient : MonoBehaviour
     {
         public IngredientType type;
+        public string ingredientName;
     }
 
     public enum IngredientType

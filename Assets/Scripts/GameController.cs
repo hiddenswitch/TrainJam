@@ -46,14 +46,18 @@ namespace TrainJam.Multiplayer
         [SerializeField] private Button m_ReadyButton;
         [SerializeField] private Button m_StartGameButton;
 
-        private StringReactiveProperty m_CurrentMatchId = new StringReactiveProperty();
-        private IntReactiveProperty m_CurrentPlayerId = new IntReactiveProperty(-1);
+        private readonly ReactiveProperty<MatchDocument> m_Match = new ReactiveProperty<MatchDocument>();
+        private readonly StringReactiveProperty m_CurrentMatchId = new StringReactiveProperty();
+        private readonly IntReactiveProperty m_CurrentPlayerId = new IntReactiveProperty(-1);
         private CompositeDisposable m_MatchDisposables = new CompositeDisposable();
 
         public int localPlayerId => m_CurrentPlayerId.Value;
         public IReadOnlyReactiveProperty<int> localPlayerReactiveId => m_CurrentPlayerId;
+        public IReadOnlyReactiveProperty<MatchDocument> match => m_Match;
 
         public string matchId => m_CurrentMatchId.Value;
+
+        public bool EnableMultiplayer => m_EnableMultiplayer;
 
         protected override void Awake()
         {
@@ -107,7 +111,9 @@ namespace TrainJam.Multiplayer
                     {
                         m_CurrentMatchId.Value = document._id;
                         m_CurrentPlayerId.Value = Array.IndexOf(document.players, connectionId.Value);
-                    }, changed: (id, document, values, keys) => { })
+                        m_Match.Value = document;
+                    }, changed: (id, document, values, keys) => { m_Match.Value = document; },
+                    removed: (id) => { m_Match.Value = null; })
                 .AddTo(this);
 
             // Keeps track of the instantiated entity objects

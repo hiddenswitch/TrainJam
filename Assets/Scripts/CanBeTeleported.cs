@@ -10,11 +10,11 @@ namespace TrainJam
     [RequireComponent(typeof(Collider))]
     public sealed class CanBeTeleported : UIBehaviour
     {
-        private ProjectedDragObject dragObject;
+//        private Draggable dragObject;
 
         protected override void Start()
         {
-            dragObject = GetComponent<ProjectedDragObject>();
+//            dragObject = GetComponent<Draggable>();
 
             base.Start();
 
@@ -27,10 +27,10 @@ namespace TrainJam
                         return;
                     }
 
-                    if (dragObject && dragObject.dragging)
-                    {
-                        return;
-                    }
+//                    if (dragObject && dragObject.m_Dragging)
+//                    {
+//                        return;
+//                    }
 
                     var portalToPlayerId = col.gameObject.GetComponent<PortalToPlayerId>();
                     if (!portalToPlayerId)
@@ -40,7 +40,7 @@ namespace TrainJam
 
                     used = true;
 
-                    Destroy(dragObject);
+//                    Destroy(dragObject);
                     var rigidbody = GetComponent<Rigidbody>();
                     if (rigidbody)
                     {
