@@ -27,6 +27,7 @@ namespace DefaultNamespace
             // Turn off the preview object
             m_PreviewObject.gameObject.SetActive(false);
             var spawnedThisEvent = false;
+            Draggable spawnedObject = null;
             this.OnBeginDragAsObservable()
                 .Subscribe(pointer =>
                 {
@@ -43,7 +44,7 @@ namespace DefaultNamespace
                     {
                         m_PreviewObject.gameObject.SetActive(false);
                         spawnedThisEvent = true;
-                        var spawnedObject = Instantiate(m_ObjectToSpawnPrefab,
+                        spawnedObject = Instantiate(m_ObjectToSpawnPrefab,
                             DraggingObjectPlane.instance.mousePositionOnPlane, m_PreviewObject.transform.rotation);
                         spawnedObject.gameObject.SetActive(true);
                         m_SpawnSubject.OnNext(spawnedObject);
@@ -54,7 +55,14 @@ namespace DefaultNamespace
 
             // Disable the preview object whenever we stop dragging.
             this.OnEndDragAsObservable()
-                .Subscribe(pointer => { m_PreviewObject.gameObject.SetActive(false); })
+                .Subscribe(pointer =>
+                {
+                    m_PreviewObject.gameObject.SetActive(false);
+                    if (spawnedObject != null)
+                    {
+                        spawnedObject.OnEndDrag();
+                    }
+                })
                 .AddTo(this);
         }
 
