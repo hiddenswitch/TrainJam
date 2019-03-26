@@ -530,7 +530,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 894ca1c0e81ab4f349468407a9df7d79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnIngredient: 4
+  spawnIngredient: 2
   buttonLabel: {fileID: 1987240989}
   button: {fileID: 80374785}
   cooldownTime: 5
@@ -5256,7 +5256,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 894ca1c0e81ab4f349468407a9df7d79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnIngredient: 2
+  spawnIngredient: 0
   buttonLabel: {fileID: 292927642}
   button: {fileID: 769654587}
   cooldownTime: 5
@@ -8365,7 +8365,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 894ca1c0e81ab4f349468407a9df7d79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnIngredient: 6
+  spawnIngredient: 4
   buttonLabel: {fileID: 341933284}
   button: {fileID: 1449397046}
   cooldownTime: 5
@@ -9368,7 +9368,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 894ca1c0e81ab4f349468407a9df7d79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnIngredient: 5
+  spawnIngredient: 3
   buttonLabel: {fileID: 1124666399}
   button: {fileID: 1632756521}
   cooldownTime: 5
@@ -9851,7 +9851,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 894ca1c0e81ab4f349468407a9df7d79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnIngredient: 3
+  spawnIngredient: 1
   buttonLabel: {fileID: 1902910020}
   button: {fileID: 1678006965}
   cooldownTime: 5

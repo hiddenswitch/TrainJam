@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d24d64d4f340467097df656c4c4eae7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ingredientType: 2
+  ingredientType: 0
   actionText: {fileID: 163427148180639444}
   canvasGroup: {fileID: 163427147928454756}
   backgroundImage: {fileID: 163427147928454753}
