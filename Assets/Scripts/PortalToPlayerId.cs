@@ -1,8 +1,21 @@
-﻿using UnityEngine;
+﻿using TrainJam.Multiplayer;
+using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class PortalToPlayerId : MonoBehaviour
+namespace TrainJam
 {
-    [SerializeField] private int m_ToPlayerId;
+    public class PortalToPlayerId : UIBehaviour
+    {
+        [SerializeField] private int m_ToPlayerId;
+//        [SerializeField] priv
 
-    public int toPlayerId => m_ToPlayerId;
+        public int toPlayerId => m_ToPlayerId;
+
+        private void Awake()
+        {
+            
+//            GameController.instance.Instantiate(toPlayerId, prefabToInstantiate);
+        }
+    }
+
 }
